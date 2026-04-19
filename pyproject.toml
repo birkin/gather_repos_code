@@ -1,0 +1,10 @@
+[project]
+name = "gather-repos-code"
+version = "0.0.0"
+description = "script to gather all repos"
+readme = "coming"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[tool.uv]
+exclude-newer = "2 days"

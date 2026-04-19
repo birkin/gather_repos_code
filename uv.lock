@@ -1,0 +1,12 @@
+version = 1
+revision = 3
+requires-python = "==3.12.*"
+
+[options]
+exclude-newer = "2026-04-14T11:53:16.754783Z"
+exclude-newer-span = "P2D"
+
+[[package]]
+name = "gather-repos-code"
+version = "0.0.0"
+source = { virtual = "." }
