@@ -18,7 +18,7 @@ The goal is to collect working trees for analysis and documentation, not to main
 In both modes, the script:
 
 - creates the enclosing directory if needed
-- stores update state in `enclosing_dir.parent / 'gather_repos_state.json'`
+- stores update state in `../gather_repos_state.json` relative to `gather_repos_code/main.py`
 - derives a local directory name for each repo from the repo URL
 - checks each repo's remote `main` branch before deciding whether local work is needed
 - asks for confirmation before fully deleting only the destination directories that actually need refresh
@@ -78,7 +78,7 @@ uv run ./main.py --help
    - all-repos mode: `REPOS_TO_CLONE_JSON`
    - single-repo mode: `--github-repo-url`
 3. It creates the enclosing directory if it does not already exist.
-4. It loads or initializes `../gather_repos_state.json` relative to the enclosing directory.
+4. It loads or initializes `../gather_repos_state.json` relative to `gather_repos_code/main.py`.
 5. It checks each target repo's remote `main` branch commit with `git ls-remote`.
 6. It compares that remote `main` commit to the last saved commit for the repo.
 7. It prompts only for destination directories that need refresh because the repo changed or the local directory is missing.
@@ -119,7 +119,7 @@ Because this confirmation uses an interactive prompt, reruns that actually need 
 The script keeps per-repo update state in a JSON file located at:
 
 ```text
-<enclosing_dir>/../gather_repos_state.json
+<project_root>/gather_repos_state.json
 ```
 
 That file records:
@@ -129,7 +129,7 @@ That file records:
 - when each repo was last checked
 - when each repo was last refreshed locally
 
-This state file is kept outside the gathered repo bundle so it does not get swept into the public output tree.
+This state file is kept outside `gather_repos_code/` at a fixed project-level location, independent of the chosen `--enclosing-dir`.
 
 ## Output Layout
 
@@ -179,7 +179,7 @@ the resulting layout will be:
     the_repo/
 ```
 
-In either mode, each repo directory will contain the working tree content, but not any `.git/` directories found inside that cloned repo tree. Sensitive text detected by the cleanup pass will be replaced with deterministic placeholder values. The sibling `gather_repos_state.json` file will hold refresh-tracking metadata outside that output bundle.
+In either mode, each repo directory will contain the working tree content, but not any `.git/` directories found inside that cloned repo tree. Sensitive text detected by the cleanup pass will be replaced with deterministic placeholder values. The project-level `gather_repos_state.json` file will hold refresh-tracking metadata outside that output bundle.
 
 ## Notes
 

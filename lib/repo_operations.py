@@ -63,13 +63,14 @@ def derive_repo_dir_name(repo_url: str) -> str:
     return repo_basename
 
 
-def derive_state_file_path(enclosing_dir: Path) -> Path:
+def derive_state_file_path() -> Path:
     """
-    Derives the persistent state-file path from the enclosing directory.
+    Derives the persistent state-file path relative to main.py.
 
     Called by: main.main()
     """
-    state_file_path: Path = enclosing_dir.parent / STATE_FILE_NAME
+    main_file_dir: Path = Path(__file__).resolve().parent.parent
+    state_file_path: Path = main_file_dir.parent / STATE_FILE_NAME
     return state_file_path
 
 

@@ -112,7 +112,7 @@ def main() -> None:
         validate_git_available()
         repo_urls: list[str] = resolve_repo_urls(github_repo_url)
         ensure_enclosing_dir(enclosing_dir)
-        state_file: Path = derive_state_file_path(enclosing_dir)
+        state_file: Path = derive_state_file_path()
         state: dict[str, object] = load_repo_state(state_file)
         state_repos: dict[str, object] = state['repos'] if isinstance(state.get('repos'), dict) else {}
         pending_updates: list[dict[str, object]] = []

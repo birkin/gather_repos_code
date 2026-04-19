@@ -59,7 +59,7 @@ class MainTests(unittest.TestCase):
             events: list[str] = []
             repo_url = 'git@github.com:Brown-University-Library/repo_a.git'
             expected_repo_dir = (Path(temp_dir) / 'repo_a').resolve()
-            expected_state_file = Path(temp_dir).resolve().parent / 'gather_repos_state.json'
+            expected_state_file = Path(main.__file__).resolve().parent.parent / 'gather_repos_state.json'
 
             def fake_clone_repo(clone_url: str, destination_dir: Path) -> None:
                 self.assertEqual(clone_url, repo_url)
@@ -419,7 +419,7 @@ class MainTests(unittest.TestCase):
                                                     ):
                                                         main.main()
 
-            state_file = Path(temp_dir).resolve().parent / 'gather_repos_state.json'
+            state_file = Path(main.__file__).resolve().parent.parent / 'gather_repos_state.json'
             saved_state = json.loads(state_file.read_text(encoding='utf-8'))
 
         self.assertEqual(saved_state['version'], 1)

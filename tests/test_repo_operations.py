@@ -19,15 +19,12 @@ class RepoOperationsTests(unittest.TestCase):
         repo_dir_name = derive_repo_dir_name('git@github.com:Brown-University-Library/repo_a.git')
         self.assertEqual(repo_dir_name, 'repo_a')
 
-    def test_derive_state_file_path_uses_parent_of_enclosing_dir(self) -> None:
+    def test_derive_state_file_path_uses_parent_of_main_py(self) -> None:
         """
-        Checks the state file is placed alongside the enclosing directory.
+        Checks the state file is placed at ../gather_repos_state.json from main.py.
         """
-        with tempfile.TemporaryDirectory() as temp_dir:
-            enclosing_dir = Path(temp_dir) / 'bundle'
-            expected_state_file = Path(temp_dir) / 'gather_repos_state.json'
-
-            state_file = derive_state_file_path(enclosing_dir)
+        expected_state_file = Path(__file__).resolve().parents[2] / 'gather_repos_state.json'
+        state_file = derive_state_file_path()
 
         self.assertEqual(state_file, expected_state_file)
 
